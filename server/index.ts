@@ -9,7 +9,7 @@ const PORT: number = 8000;
 app.use(express.json());
 app.use(cors());
 
-app.get("/users", async (_req, res) => {
+app.get("/api/users", async (_req, res) => {
   try {
     const users = await user.classUser.findAll();
     res.json(users);

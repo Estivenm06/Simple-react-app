@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "server": "ts-node-dev ./server/index.ts"
+    "server": "ts-node-dev ./server/index.ts",
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "",
