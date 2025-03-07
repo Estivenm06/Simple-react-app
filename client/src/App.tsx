@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./styles.css";
 import { getUser } from "../services/user";
 import { User } from "../types/userType.ts";
 
@@ -16,7 +15,7 @@ export const App = () => {
         </h1>
       </div>
     );
- // xl is 2rem, lg is 1.5rem, md is 1.125rem, sm is 1rem, xs is 0.875rem
+    
   return (
     <>
     <h1 className="bg-black text-white text-center p-4 font-bold text-6xl">Hello React</h1>

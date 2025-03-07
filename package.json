@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
     "server": "ts-node-dev ./server/index.ts",
-    "preview": "vite preview"
+    "dev": "concurrently --kill-others \"npm run server\" \"vite serve --host\"",
+    "preview": "concurrently --kill-others \"npm run server\" \"vite preview --host\""
   },
   "keywords": [],
   "author": "",
@@ -19,7 +19,9 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@types/sequelize": "^4.28.20",
+    "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
     "pg": "^8.13.3",
     "postcss": "^8.5.3",
     "react": "^19.0.0",
