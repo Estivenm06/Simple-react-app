@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { getUser } from "../services/user";
 import { User } from "../types/userType.ts";
+import { UserComponent } from "./User.tsx";
 
-export const App = () => {
+export const App = (): React.JSX.Element => {
   const [user, setUser] = useState<User[]>([]);
+
   useEffect(() => {
     getUser().then((data) => setUser(data));
   }, []);
@@ -15,18 +17,19 @@ export const App = () => {
         </h1>
       </div>
     );
-    
+
   return (
     <>
-    <h1 className="bg-black text-white text-center p-4 font-bold text-6xl">Hello React</h1>
+      <h1 className="bg-black text-white text-center p-4 font-bold text-6xl">
+        Hello React
+      </h1>
+      <div className="grid md:grid-cols-2 xl:grid-cols-3 md:gap-4 mt-4">
       {user.map((user, id) => (
-        <div key={id} className="bg-gray-200 p-4 m-4 rounded-lg">
-            <h1 className="text-2xl font-bold">User {id+1}</h1>
-            <p className="text-lg xs:text-center">
-                {user.name} - {user.email}
-            </p>
-        </div>
+          <div key={id} className="block container mx-auto">
+            <UserComponent user={user} />
+          </div>
       ))}
+      </div>
     </>
   );
 };

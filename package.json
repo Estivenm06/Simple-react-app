@@ -5,7 +5,7 @@
   "scripts": {
     "build": "vite build",
     "server": "ts-node-dev ./server/index.ts",
-    "dev": "concurrently --kill-others \"npm run server\" \"vite serve --host\"",
+    "dev": "concurrently --kill-others \"npm run server\" \"vite --host\"",
     "preview": "concurrently --kill-others \"npm run server\" \"vite preview --host\"",
     "lint": "eslint ."
   },

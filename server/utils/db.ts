@@ -5,7 +5,7 @@ import axios from "axios";
 import { User } from "../types/userType.ts";
 
 export const sequelize: Sequelize = new Sequelize(
-  "postgresql://postgres:password@postgres:5432/",
+  "postgresql://postgres:password@localhost:5432/",
   {
     dialect: "postgres",
     dialectModule: pg,
