@@ -2,6 +2,7 @@ import { Sequelize } from "sequelize";
 import pg from "pg";
 import { user } from "../models/user.ts";
 import axios from "axios";
+import { User } from "../types/userType.ts";
 
 export const sequelize: Sequelize = new Sequelize(
   "postgresql://postgres:password@postgres:5432/",
@@ -16,13 +17,13 @@ export const connectToDb = async (): Promise<void> => {
     const userClass = user.classUser;
     await sequelize.authenticate();
     await user.initUser();
-    await userClass.sync({force: true}).then(async () => {
+    await userClass.sync({ force: true }).then(async () => {
       try {
         console.log("User table created");
         await axios
           .get("https://jsonplaceholder.typicode.com/users")
           .then((response) => {
-            response.data.forEach(async (user: typeof userClass | any) => {
+            response.data.forEach(async (user: User) => {
               await userClass.create(user);
             });
           });
