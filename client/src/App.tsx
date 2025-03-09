@@ -23,9 +23,9 @@ export const App = (): React.JSX.Element => {
       <h1 className="bg-black text-white text-center p-4 font-bold text-6xl">
         Hello React
       </h1>
-      <div className="grid md:grid-cols-2 xl:grid-cols-3 md:gap-4 mt-4">
+      <div className="grid md:grid-cols-2 xl:grid-cols-3 md:gap-4 mt-4 container mx-auto">
       {user.map((user, id) => (
-          <div key={id} className="block container mx-auto">
+          <div key={id} className="block">
             <UserComponent user={user} />
           </div>
       ))}
