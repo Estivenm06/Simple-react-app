@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { Request, Response } from 'express';
 import { user } from '../models/user.ts';
 import { newUser } from '../types/userType.ts'
 
@@ -35,16 +34,17 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', async (req, res) => {
     try{
         const userData: newUser = req.body
+        const id: number = await user.classUser.max('id')
         if(!userData){
             res
                 .status(400)
                 .json({message: 'User is empty'})
             return;
         }
-        await user.classUser.create(userData)
+        await user.classUser.create({id: id + 1, ...userData})
         res.json(userData)
     }catch(error){
         console.log(error)

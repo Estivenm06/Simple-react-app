@@ -19,9 +19,11 @@ async function initUser() {
         },
         name: {
           type: DataTypes.STRING,
+          unique: true
         },
         username: {
           type: DataTypes.STRING,
+          unique: true
         },
         email: {
           type: DataTypes.STRING,
@@ -34,9 +36,11 @@ async function initUser() {
         },
         website: {
           type: DataTypes.STRING,
+          unique: true
         },
         company: {
           type: DataTypes.JSONB,
+          unique: true
         },
       },
       {

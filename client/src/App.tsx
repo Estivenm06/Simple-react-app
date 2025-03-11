@@ -1,30 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { getUser } from "../services/user";
+import { getAll } from "../services/user";
 import { User } from "../types/userType.ts";
-import { UserComponent } from "./User.tsx";
-import { Header } from "./Header.tsx";
+
+import { BrowserRouter as Router, Route, Routes } from "react-router";
+import { SingleUser } from "./pages/SingleUser.tsx";
+import {Home} from "./pages/Home.tsx";
 
 export const App = (): React.JSX.Element => {
-  const [user, setUser] = useState<User[]>([]);
   const [themeMode, setThemeMode] = useState<string>("");
+  const [user, setUser] = useState<User[]>([]);
+  const [modal, setModal] = useState<boolean>(false);
 
   useEffect(() => {
-    getUser().then((data) => setUser(data));
-    const theme = localStorage.getItem("theme");
-    switch(theme){
-      case "dark":
-        setThemeMode("dark");
-        localStorage.setItem("theme", "dark");
-        break;
-      case "light":
-        setThemeMode("light");
-        localStorage.setItem("theme", "light");
-        break;
-      default:
-        setThemeMode("light");
-        localStorage.setItem("theme", "light");
-        break;
-    }
+    getAll().then((data) => setUser(data));
+        const theme = localStorage.getItem("theme");
+        switch (theme) {
+          case "dark":
+            setThemeMode("dark");
+            localStorage.setItem("theme", "dark");
+            break;
+          case "light":
+            setThemeMode("light");
+            localStorage.setItem("theme", "light");
+            break;
+          default:
+            setThemeMode("light");
+            localStorage.setItem("theme", "light");
+            break;
+        }
   }, []);
 
   if (!user.length)
@@ -37,15 +40,11 @@ export const App = (): React.JSX.Element => {
     );
 
   return (
-    <>
-      <Header themeMode={themeMode} setThemeMode={setThemeMode} />
-      <div className="grid md:grid-cols-2 xl:grid-cols-3 md:gap-4 mt-4 container mx-auto transition-all ease-in-out duration-300">
-        {user.map((user, id) => (
-          <div key={id} className="block transition-all ease-in-out duration-300">
-            <UserComponent user={user} themeMode={themeMode}/>
-          </div>
-        ))}
-      </div>
-    </>
+    <Router>
+        <Routes>
+          <Route index path="/" element={<Home user={user} themeMode={themeMode} setThemeMode={setThemeMode} modal={modal} setModal={setModal} />} />
+          <Route path='/user/:id' element={<SingleUser themeMode={themeMode} setThemeMode={setThemeMode} modal={modal} setModal={setModal}/>} />
+        </Routes>
+    </Router>
   );
 };

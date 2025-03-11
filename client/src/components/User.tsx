@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { User } from "../types/userType";
+import { User } from "../../types/userType";
+import {useNavigate} from 'react-router';
 
 interface UserComponentsProps {
   user: User;
@@ -11,6 +12,8 @@ export const UserComponent = ({
   themeMode,
 }: UserComponentsProps): React.JSX.Element => {
   const [value, setValue] = useState<boolean>(false);
+  const navigate = useNavigate()
+
   return (
     <section
       className={`transition-all ease-in-out duration-300 p-4 m-4 rounded-lg shadow-md ${
@@ -19,7 +22,7 @@ export const UserComponent = ({
           : "bg-gray-100 text-black"
       }`}
     >
-      <h1 className="text-2xl font-bold">{user.username}</h1>
+      <button onClick={() => navigate(`/user/${user.id}`)} className="hover:text-gray-200 text-3xl font-bold transition-all ease-in-out duration-300">{user.username}</button>
       <p className="text-lg font-semibold text-gray-800 ml-0.5">
         Name: {user.name}
       </p>
