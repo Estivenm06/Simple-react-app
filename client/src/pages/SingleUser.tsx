@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Header } from "../components/Header";
+import { Header } from "../components/header/Header.tsx";
 import { useNavigate, useParams } from "react-router";
 import { getUser } from "../../services/user";
 import { User } from "../../types/userType";
-import SingleUserComponents from "../components/SingleUserComponents.tsx";
-import { CreateUserForm } from "../components/CreateUserForm.tsx";
+import SingleUserComponents from "../components/userComponents/SingleUserComponents.tsx";
+import { CreateUserForm } from "../components/createUser/CreateUserForm.tsx";
 
 interface SingleUserProps {
   themeMode: string;

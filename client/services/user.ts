@@ -17,7 +17,7 @@ export const createUser = async (user: NewUser): Promise<User> => {
   return response.data;
 }
 
-export const deleteUser = async (id: string): Promise<User> => {
+export const deleteUser = async (id: number): Promise<User> => {
   const response = await axios.delete('/api/users/' + id)
   return response.data;
 }

@@ -1,61 +1,12 @@
 import React, { useState } from "react";
-import { FormikValues, useFormik } from "formik";
-import { NewUser } from "../../types/userType";
-import { createUser } from "../../services/user";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 
-interface CreateUserProps {
-  setModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { NewUser, User } from "../../../types/userType";
+import { createUser } from "../../../services/user";
 
-interface PagesProps {
-  pageName: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  inputs: Array<string>;
-  formik: FormikValues;
-  page: number;
-  pageNumber: number;
-}
-
-const Pages = ({
-  pageName,
-  onChange,
-  inputs,
-  formik,
-  page,
-  pageNumber,
-}: PagesProps) => {
-  return (
-    <div
-      className={`${
-        page === pageNumber
-          ? "opacity-100 flex flex-col justify-center gap-2 p-5 transition-all ease-in-out duration-500"
-          : "opacity-0 size-0 invisible "
-      }`}
-    >
-      <h2 className="text-3xl md:text-3xl uppercase">{pageName}</h2>
-      {inputs.map((input, id) => (
-        <div key={id} className="flex flex-col">
-          <label htmlFor={input} className="text-black font-semibold">
-            {input.charAt(0).toUpperCase() + input.slice(1)}
-          </label>
-          <input
-            type={input === "email" ? "email" : "text"}
-            className="p-2 rounded-lg bg-stone-300 text-black transition-all ease-in-out duration-500"
-            onChange={onChange}
-            id={input}
-            name={input}
-            placeholder={`Insert your ${input}`}
-            value={formik.values[input]}
-          />
-          {formik.errors[input] && formik.touched[input] ? (
-            <div className="text-red-500">{formik.errors[input]}</div>
-          ) : null}
-        </div>
-      ))}
-    </div>
-  );
-};
+import { Pages } from "./Pages";
+import { Error } from "./Error";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -74,8 +25,14 @@ const validationSchema = Yup.object().shape({
   lng: Yup.string().required("Lng is required"),
 });
 
-export const CreateUserForm = ({ setModal }: CreateUserProps) => {
+interface CreateUserProps {
+  setModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setUsers: React.Dispatch<React.SetStateAction<User[]>>;
+}
+
+export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps) => {
   const [page, setPage] = useState<number>(1);
+  const [error, setError] = useState<string | null>(null);
 
   const inputsPage1: Array<string> = ["name", "username", "email", "phone"];
   const inputsPage2: Array<string> = ["city", "suite", "street", "zipcode"];
@@ -119,22 +76,8 @@ export const CreateUserForm = ({ setModal }: CreateUserProps) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      if (
-        values.name &&
-        values.username &&
-        values.email &&
-        values.city &&
-        values.lat &&
-        values.lng &&
-        values.suite &&
-        values.street &&
-        values.zipcode &&
-        values.phone &&
-        values.website &&
-        values.companyName &&
-        values.catchPhrase &&
-        values.bs
-      ) {
+      if(values.name)
+      if(values){
         const user: NewUser = {
           name: values.name,
           username: values.username,
@@ -157,22 +100,21 @@ export const CreateUserForm = ({ setModal }: CreateUserProps) => {
             bs: values.bs,
           },
         };
-        console.log(user);
-        createUser(user).then((response) => {
+        createUser(user).then((user: User) => {
           window.alert("User created successfully");
-          console.log(response);
+          setUsers((prevValue: User[]) => prevValue.concat(user));
           setModal(false);
-          window.location.reload();
         });
-      } else {
-        window.alert("Please fill all the fields or check your geolocation");
+      }else{
+        setError('Check all fields or allow location permission.')
       }
     },
   });
 
   return (
     <form
-      className={`container mx-auto shadow-xl rounded-lg w-80 lg:w-2/6 md:w-1/2 p-5 rounded-lg transition-all ease-in-out duration-500 bg-gray-100`} onSubmit={formik.handleSubmit}
+      className={`container mx-auto shadow-xl rounded-lg w-80 lg:w-2/6 md:w-1/2 p-5 rounded-lg transition-all ease-in-out duration-500 bg-gray-100`}
+      onSubmit={formik.handleSubmit}
     >
       <div className="flex justify-between p-5 transition-all ease-in-out duration-500">
         <h1 className={`text-2xl md:text-4xl uppercase font-semibold`}>
@@ -186,6 +128,7 @@ export const CreateUserForm = ({ setModal }: CreateUserProps) => {
           X
         </button>
       </div>
+
       <>
         <Pages
           pageName="Information"
@@ -212,7 +155,7 @@ export const CreateUserForm = ({ setModal }: CreateUserProps) => {
           formik={formik}
         />
       </>
-
+        <Error error={error} />
       <div className="flex flex-row gap-5 transition-all ease-in-out duration-500">
         <button
           type="button"
@@ -239,7 +182,7 @@ export const CreateUserForm = ({ setModal }: CreateUserProps) => {
         <button
           className={`${
             page === 3
-              ? "opacity-100 bg-green-500 hover:bg-green-700 transition-all ease-in-out duration-500 rounded-lg w-full py-3 text-white font-bold uppercase"
+              ? "opacity-100 bg-green-500 hover:bg-green-700 transition-all ease-in-out duration-500 rounded-lg w-full py-3 text-white font-bold uppercase block"
               : "opacity-0 size-0 invisible"
           }`}
           type="submit"

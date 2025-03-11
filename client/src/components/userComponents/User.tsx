@@ -1,18 +1,30 @@
 import React, { useState } from "react";
-import { User } from "../../types/userType";
-import {useNavigate} from 'react-router';
+import { User } from "../../../types/userType";
+import {NavigateFunction, useNavigate} from 'react-router';
+import { deleteUser } from "../../../services/user";
 
 interface UserComponentsProps {
   user: User;
   themeMode: string;
+  setUsers: React.Dispatch<React.SetStateAction<User[]>>
 }
 
 export const UserComponent = ({
   user,
   themeMode,
+  setUsers
 }: UserComponentsProps): React.JSX.Element => {
   const [value, setValue] = useState<boolean>(false);
-  const navigate = useNavigate()
+  const navigate: NavigateFunction = useNavigate()
+
+  const handleDelete = (id: number): void => {
+    deleteUser(id).then(() => 
+    window.alert('You deleted this user.'))
+    setUsers((prevValue: User[]) => {
+    return prevValue.filter((userItem) => userItem.id !== id);
+    });
+      
+  }
 
   return (
     <section
@@ -53,7 +65,7 @@ export const UserComponent = ({
       >
         {value ? "close info..." : "more info..."}
       </button>
-      <button className="hover:bg-red-900 text-1xl px-3 py-1 bg-red-600 rounded-lg transition-all ease-in-out duration-300 capitalize">
+      <button onClick={() => {handleDelete(user.id)}} className="hover:bg-red-900 text-1xl px-3 py-1 bg-red-600 rounded-lg transition-all ease-in-out duration-300 capitalize">
           delete user
       </button>
       </div>
