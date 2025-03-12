@@ -43,7 +43,7 @@ export const App = (): React.JSX.Element => {
     <Router>
         <Routes>
           <Route index path="/" element={<Home user={users} setUsers={setUsers} themeMode={themeMode} setThemeMode={setThemeMode} modal={modal} setModal={setModal} />} />
-          <Route path='/user/:id' element={<SingleUser themeMode={themeMode} setThemeMode={setThemeMode} modal={modal} setModal={setModal}/>} />
+          <Route path='/user/:id' element={<SingleUser setUsers={setUsers} themeMode={themeMode} setThemeMode={setThemeMode} modal={modal} setModal={setModal}/>} />
         </Routes>
     </Router>
   );

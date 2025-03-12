@@ -13,7 +13,6 @@ export const getUser = async (id: string): Promise<User> => {
 
 export const createUser = async (user: NewUser): Promise<User> => {
   const response = await axios.post<User>('/api/users/', user)
-  console.log(response);
   return response.data;
 }
 

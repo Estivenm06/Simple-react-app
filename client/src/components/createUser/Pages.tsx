@@ -33,7 +33,6 @@ export const Pages = ({
             {input.charAt(0).toUpperCase() + input.slice(1)}
           </label>
           <input
-            required
             type={input === "email" ? "email" : "text"}
             className="p-2 rounded-lg bg-stone-300 text-black transition-all ease-in-out duration-500"
             onChange={onChange}

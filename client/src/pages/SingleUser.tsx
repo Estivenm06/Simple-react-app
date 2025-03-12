@@ -11,6 +11,7 @@ interface SingleUserProps {
   setThemeMode: React.Dispatch<React.SetStateAction<string>>;
   modal: boolean;
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setUsers: React.Dispatch<React.SetStateAction<User[]>>
 }
 
 export const SingleUser = ({
@@ -18,6 +19,7 @@ export const SingleUser = ({
   themeMode,
   modal,
   setModal,
+  setUsers
 }: SingleUserProps): React.JSX.Element => {
   const [user, setUser] = useState<User>();
   const params = useParams<{ id: string }>();
@@ -59,7 +61,7 @@ export const SingleUser = ({
           modal ? "block" : "hidden"
         }`}
       >
-        <CreateUserForm setModal={setModal} />
+        <CreateUserForm setModal={setModal} setUsers={setUsers} />
       </div>
       <div className="flex flex-col justify-center h-screen">
         <SingleUserComponents user={user} />

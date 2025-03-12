@@ -76,8 +76,7 @@ export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      if(values.name)
-      if(values){
+      if (values) {
         const user: NewUser = {
           name: values.name,
           username: values.username,
@@ -105,8 +104,8 @@ export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps) => {
           setUsers((prevValue: User[]) => prevValue.concat(user));
           setModal(false);
         });
-      }else{
-        setError('Check all fields or allow location permission.')
+      } else {
+        setError("Check all fields or allow location permission.");
       }
     },
   });
@@ -155,7 +154,7 @@ export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps) => {
           formik={formik}
         />
       </>
-        <Error error={error} />
+      <Error error={error} />
       <div className="flex flex-row gap-5 transition-all ease-in-out duration-500">
         <button
           type="button"
