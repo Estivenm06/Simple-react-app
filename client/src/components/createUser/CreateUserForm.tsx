@@ -1,26 +1,28 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
-import { NewUser, User } from "../../../types/userType";
-import { createUser } from "../../../services/user";
-
-import { Pages } from "./Pages";
-import { Error } from "./Error";
+import { NewUser, User } from "../../../types/userType.js";
+import { createUser } from "../../../services/user.js";
+import { Pages } from "./Pages.jsx";
+import { ErrorComponent } from "./Error.jsx";
 
 const validationSchema = Yup.object().shape({
+  //Page1
   name: Yup.string().required("Name is required"),
   username: Yup.string().required("Username is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
+  phone: Yup.string().required("Phone is required"),
+  //Page2
   city: Yup.string().required("City is required"),
   suite: Yup.string().required("Suite is required"),
   street: Yup.string().required("Street is required"),
   zipcode: Yup.string().required("Zipcode is required"),
-  phone: Yup.string().required("Phone is required"),
+  //Page3
   website: Yup.string().required("Website is required"),
   companyName: Yup.string().required("Company name is required"),
   catchPhrase: Yup.string().required("Catch phrase is required"),
   bs: Yup.string().required("Bs is required"),
+  //Permission
   lat: Yup.string().required("Lat is required"),
   lng: Yup.string().required("Lng is required"),
 });
@@ -29,6 +31,7 @@ interface CreateUserProps {
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
 }
+
 
 export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps) => {
   const [page, setPage] = useState<number>(1);
@@ -47,12 +50,25 @@ export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps) => {
     setPage(page);
     if (page === 2) {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          formik.setFieldValue("lat", position.coords.latitude);
-          formik.setFieldValue("lng", position.coords.longitude);
-        });
+        navigator.geolocation.getCurrentPosition(
+          (position: GeolocationPosition) => {
+            formik.setFieldValue("lat", position.coords.latitude);
+            formik.setFieldValue("lng", position.coords.longitude);
+          },
+          (error: GeolocationPositionError) => {
+            if (error.code === error.PERMISSION_DENIED) {
+              setError("User denied the request for Geolocation.");
+              setTimeout(() => {
+                setError(null);
+              }, 5000);
+            }
+          }
+        );
       } else {
-        alert("Geolocation is not supported by this browser");
+        setError("Geolocation is not supported by this browser");
+        setTimeout(() => {
+          setError(null);
+        }, 5000);
       }
     }
   };
@@ -75,37 +91,59 @@ export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps) => {
       lng: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      if (values) {
-        const user: NewUser = {
-          name: values.name,
-          username: values.username,
-          email: values.email,
-          address: {
-            geo: {
-              lat: values.lat,
-              lng: values.lng,
+    onSubmit: async (values) => {
+      console.log(values);
+      
+      try {
+        if (values) {
+          const user: NewUser = {
+            name: values.name,
+            username: values.username,
+            email: values.email,
+            address: {
+              geo: {
+                lat: values.lat,
+                lng: values.lng,
+              },
+              city: values.city,
+              suite: values.suite,
+              street: values.street,
+              zipcode: values.zipcode,
             },
-            city: values.city,
-            suite: values.suite,
-            street: values.street,
-            zipcode: values.zipcode,
-          },
-          phone: values.phone,
-          website: values.website,
-          company: {
-            name: values.companyName,
-            catchPhrase: values.catchPhrase,
-            bs: values.bs,
-          },
-        };
-        createUser(user).then((user: User) => {
-          window.alert("User created successfully");
-          setUsers((prevValue: User[]) => prevValue.concat(user));
-          setModal(false);
-        });
-      } else {
-        setError("Check all fields or allow location permission.");
+            phone: values.phone,
+            website: values.website,
+            company: {
+              name: values.companyName,
+              catchPhrase: values.catchPhrase,
+              bs: values.bs,
+            },
+          };
+          await createUser(user)
+          .then((response) => {
+            if(typeof(response) === 'string'){
+              setError(response)
+              setTimeout(() => {
+                setError(null)
+              }, 5000)
+            }
+            if(typeof(response) === 'object'){
+              window.alert('User created succesfully.')
+              setUsers((prevValues: User[]) => prevValues.concat(response))
+              setModal(false)
+            }
+          }
+          )
+          .catch((error) => {setError(error); setTimeout(() => {setError(null);}, 5000);});
+        } else {
+          setError("Check all fields or allow location permission.");
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+          setTimeout(() => {
+            setError(null);
+          }, 5000);
+        }
       }
     },
   });
@@ -154,7 +192,7 @@ export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps) => {
           formik={formik}
         />
       </>
-      <Error error={error} />
+      <ErrorComponent error={error} />
       <div className="flex flex-row gap-5 transition-all ease-in-out duration-500">
         <button
           type="button"

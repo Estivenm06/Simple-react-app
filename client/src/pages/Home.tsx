@@ -1,8 +1,8 @@
 import React from "react";
-import { UserComponent } from "../components/userComponents/User.tsx";
-import { Header } from "../components/header/Header.tsx";
-import { User } from "../../types/userType.ts";
-import { CreateUserForm } from "../components/createUser/CreateUserForm.tsx";
+import { UserComponent } from "../components/userComponents/User.jsx";
+import { Header } from "../components/header/Header.jsx";
+import { User } from "../../types/userType.js";
+import { CreateUserForm } from "../components/createUser/CreateUserForm.jsx";
 
 interface HomeProps {
   user: User[];

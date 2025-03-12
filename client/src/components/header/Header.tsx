@@ -37,18 +37,18 @@ export const Header = ({
 
   return (
     <header
-      className={`transition-all ease-in-out duration-300 text-white p-5 shadow-md ${
+      className={`transition-all ease-in-out duration-300 text-white pb-3 py-3 p-5 shadow-md ${
         themeMode.toLowerCase() === "light" ? "bg-blue-500" : "bg-stone-700"
       }`}
     >
-      <div className="container mx-auto flex font-bold transition-all ease-in-out duration-300 items-center">
-        <h1 className="text-3xl xl:text-4xl capitalize">user information</h1>
-        <button className="text-lg capitalize ml-auto mr-5 bg-gray-500 text-gray px-3 py-1 rounded-lg"
+      <div className="flex items-center font-bold transition-all ease-in-out duration-300">
+        <h1 className="text-2xl md:text-3xl xl:text-4xl mr-5 capitalize transition-all ease-in-out duration-300">user information</h1>
+        <button className="text-md capitalize ml-auto mr-1 bg-gray-500 text-gray px-1 md:px-3 py-1 rounded-lg transition-all ease-in-out duration-300"
         onClick={() => setModal(true)}
         >
           add user
         </button>
-        <p className="text-lg capitalize">
+        <p className=" md:text-lg capitalize transition-all ease-in-out duration-300">
           {checked ? "light mode" : "dark mode"}
           <Switch checked={checked} onChange={handleChange} />
         </p>

@@ -1,5 +1,5 @@
 import React from "react";
-import { User } from "../../../types/userType";
+import { User } from "../../../types/userType.js";
 import { useNavigate } from "react-router";
 
 interface UserComponentsProps {

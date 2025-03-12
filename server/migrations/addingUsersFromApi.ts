@@ -1,5 +1,4 @@
-"use scric";
-import User from "../models/user.ts";
+import User from "../models/user.js";
 import axios from "axios";
 import { DataTypes, QueryInterface } from "sequelize";
 

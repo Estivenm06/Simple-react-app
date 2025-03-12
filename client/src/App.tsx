@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getAll } from "../services/user";
-import { User } from "../types/userType.ts";
+import { getAll } from "../services/user.js";
+import { User } from "../types/userType.js";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router";
-import { SingleUser } from "./pages/SingleUser.tsx";
-import {Home} from "./pages/Home.tsx";
+import { SingleUser } from "./pages/SingleUser.jsx";
+import {Home} from "./pages/Home.jsx";
 
 export const App = (): React.JSX.Element => {
   const [themeMode, setThemeMode] = useState<string>("");
@@ -12,7 +12,7 @@ export const App = (): React.JSX.Element => {
   const [modal, setModal] = useState<boolean>(false);
 
   useEffect(() => {
-    getAll().then((data) => setUsers(data));
+    getAll().then((data: User[]) => setUsers(data));
         const theme = localStorage.getItem("theme");
         switch (theme) {
           case "dark":

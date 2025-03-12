@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import cors from "cors";
-import { connectToDb } from "./utils/db";
-import userRouter from "./routers/userRouter.ts";
+import { connectToDb } from "./utils/db.js";
+import userRouter from "./routers/userRouter.js";
 
 const app: Express = express();
 const PORT: number = 8000;

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Header } from "../components/header/Header.tsx";
 import { useNavigate, useParams } from "react-router";
-import { getUser } from "../../services/user";
-import { User } from "../../types/userType";
-import SingleUserComponents from "../components/userComponents/SingleUserComponents.tsx";
-import { CreateUserForm } from "../components/createUser/CreateUserForm.tsx";
+import { getUser } from "../../services/user.js";
+import { User } from "../../types/userType.js";
+import { Header } from "../components/header/Header.jsx";
+import SingleUserComponents from "../components/userComponents/SingleUserComponents.jsx";
+import { CreateUserForm } from "../components/createUser/CreateUserForm.jsx";
 
 interface SingleUserProps {
   themeMode: string;
@@ -34,7 +34,7 @@ export const SingleUser = ({
         navigate("/");
         return;
       }
-      getUser(params.id).then((data) => setUser(data));
+      getUser(params.id).then((data: User) => setUser(data));
     };
     fetchUser();
   }, []);

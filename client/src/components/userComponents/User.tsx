@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { User } from "../../../types/userType";
+import { User } from "../../../types/userType.js";
 import {NavigateFunction, useNavigate} from 'react-router';
-import { deleteUser } from "../../../services/user";
+import { deleteUser } from "../../../services/user.js";
 
 interface UserComponentsProps {
   user: User;

@@ -1,6 +1,6 @@
 import React, {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
-import { App } from './src/App'
+import { App } from './src/App.jsx'
 import 'tailwindcss/tailwind.css'
 
 const root: HTMLElement | null = document.getElementById('root')
