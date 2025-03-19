@@ -17,8 +17,9 @@ export default defineConfig({
     port: 3000,
     open: true,
     proxy: {
-      '/api': 'http://localhost:8000'
-    }
+      '/api': 'http://localhost:8000',
+    },
+    allowedHosts: 'react-ts-app-158986608647.us-central1.run.app'
   },
   plugins: [react()]
 });

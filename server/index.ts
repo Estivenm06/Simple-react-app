@@ -11,6 +11,9 @@ app.use(cors());
 app.use("/api/users", userRouter);
 
 app.listen(PORT, async () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-  await connectToDb();
+  await connectToDb().then(() => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  }).catch((error) => {
+    console.log(`Error trying to running server `, error);
+  });
 });

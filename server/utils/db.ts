@@ -3,14 +3,14 @@ import pg from "pg";
 import { SequelizeStorage, Umzug } from "umzug";
 
 export const sequelize: Sequelize = new Sequelize(
-  "postgresql://postgres:password@localhost:5432/",
+  "postgresql://postgres:password@postgres:5432/", // Insert your database uri here
   {
     dialect: "postgres",
     dialectModule: pg,
   }
 );
 
-const runMigration = async () => {
+const runMigration = async (): Promise<void> => {
   const migration = new Umzug({
     migrations: {glob: './server/migrations/*.ts'},
     context: sequelize.getQueryInterface(),

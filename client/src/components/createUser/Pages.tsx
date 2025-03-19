@@ -17,7 +17,7 @@ export const Pages = ({
   formik,
   page,
   pageNumber,
-}: PagesProps) => {
+}: PagesProps): React.JSX.Element => {
   return (
     <div
       className={`${

@@ -79,7 +79,7 @@ router.post("/", async (req: Request, res: Response): Promise<any> => {
     }
 
     const id: number = await User.max("id");
-    const newUser: UserType = { id: id, ...userData };
+    const newUser: UserType = { id: id + 1, ...userData };
 
 
     await User.create(newUser);

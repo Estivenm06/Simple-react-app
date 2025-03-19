@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { NavigateFunction, useNavigate, useParams } from "react-router";
 import { getUser } from "../../services/user.js";
 import { User } from "../../types/userType.js";
 import { Header } from "../components/header/Header.jsx";
@@ -23,7 +23,7 @@ export const SingleUser = ({
 }: SingleUserProps): React.JSX.Element => {
   const [user, setUser] = useState<User>();
   const params = useParams<{ id: string }>();
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
 
   useEffect(() => {
     const fetchUser = () => {
@@ -57,7 +57,7 @@ export const SingleUser = ({
         setModal={setModal}
       />
       <div
-        className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 ${
+        className={`flex flex-col justify-center fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 ${
           modal ? "block" : "hidden"
         }`}
       >

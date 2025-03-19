@@ -6,34 +6,13 @@ import { createUser } from "../../../services/user.js";
 import { Pages } from "./Pages.jsx";
 import { ErrorComponent } from "./Error.jsx";
 
-const validationSchema = Yup.object().shape({
-  //Page1
-  name: Yup.string().required("Name is required"),
-  username: Yup.string().required("Username is required"),
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  phone: Yup.string().required("Phone is required"),
-  //Page2
-  city: Yup.string().required("City is required"),
-  suite: Yup.string().required("Suite is required"),
-  street: Yup.string().required("Street is required"),
-  zipcode: Yup.string().required("Zipcode is required"),
-  //Page3
-  website: Yup.string().required("Website is required"),
-  companyName: Yup.string().required("Company name is required"),
-  catchPhrase: Yup.string().required("Catch phrase is required"),
-  bs: Yup.string().required("Bs is required"),
-  //Permission
-  lat: Yup.string().required("Lat is required"),
-  lng: Yup.string().required("Lng is required"),
-});
-
 interface CreateUserProps {
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
 }
 
 
-export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps) => {
+export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps): React.JSX.Element => {
   const [page, setPage] = useState<number>(1);
   const [error, setError] = useState<string | null>(null);
 
@@ -46,7 +25,7 @@ export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps) => {
     "bs",
   ];
 
-  const handlePage = (page: number) => {
+  const handlePage = (page: number): void => {
     setPage(page);
     if (page === 2) {
       if (navigator.geolocation) {
@@ -73,6 +52,14 @@ export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps) => {
     }
   };
 
+  const handleError = ({message, page}: {message: string, page: number }): void => {
+    setError(message)
+    setPage(page)
+    setTimeout(() => {
+      setError(null)
+    }, 5000)
+  }
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -90,10 +77,27 @@ export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps) => {
       lat: "",
       lng: "",
     },
-    validationSchema: validationSchema,
+    validationSchema: Yup.object().shape({
+      //Page1
+      name: Yup.string().required(() => handleError({message: "Name is required", page: 1})),
+      username: Yup.string().required(() => handleError({message: "Username is required", page: 1})),
+      email: Yup.string().email(() => handleError({message: "Invalid email", page: 1})).required(() => handleError({message: "Email is required", page: 1})),
+      phone: Yup.string().required(() => handleError({message: "Phone is required", page: 1})),
+      //Page2
+      city: Yup.string().required(() => handleError({message: "City is required", page: 2})),
+      suite: Yup.string().required(() => handleError({message: "Suite is required", page: 2})),
+      street: Yup.string().required(() => handleError({message: "Street is required", page: 2})),
+      zipcode: Yup.string().required(() => handleError({message: "Zip Code is required", page: 2})),
+      //Page3
+      website: Yup.string().required(() => handleError({message: "Website is required", page: 3})),
+      companyName: Yup.string().required(() => handleError({message: "Company Name is required", page: 3})),
+      catchPhrase: Yup.string().required(() => handleError({message: "Catch Phrase is required", page: 3})),
+      bs: Yup.string().required(() => handleError({message: "Bs is required", page: 3})),
+      //Permission
+      lat: Yup.string().required(() => handleError({message: "Your location is required", page: 1})),
+      lng: Yup.string().required("Lng is required"),
+    }),
     onSubmit: async (values) => {
-      console.log(values);
-      
       try {
         if (values) {
           const user: NewUser = {

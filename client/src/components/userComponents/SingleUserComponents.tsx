@@ -1,13 +1,13 @@
 import React from "react";
 import { User } from "../../../types/userType.js";
-import { useNavigate } from "react-router";
+import { NavigateFunction, useNavigate } from "react-router";
 
 interface UserComponentsProps {
   user: User;
 }
 
-const UserComponents = ({ user }: UserComponentsProps) => {
-  const navigate = useNavigate();
+const UserComponents = ({ user }: UserComponentsProps): React.JSX.Element => {
+  const navigate: NavigateFunction = useNavigate();
   return (
     <div className="rounded-xl shadow-xl bg-gray-100 p-10 w-96 mx-auto">
       <button
