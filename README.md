@@ -1,11 +1,10 @@
 <div>
 <h1>Simple React App</h1>
-<span>Use React, and PostgresSQL as Database, and Docker for containerization</span>
+<span>Use React, and PostgresSQL as Database</span>
 <ul>
     <li>Typescript</li>
-    <li>CSS</li>
-    <li>Docker</li>
-    <li>Docker Compose</li>
+    <li>CSS (Tailwindcss framework)</li>
+    <li>Express for Server Side</li>
 </ul>
 </div>
 <div>
