@@ -1,15 +1,23 @@
 import 'dotenv/config'
-import express, { Express } from "express";
+import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import { connectToDb } from "./utils/db.js";
 import userRouter from "./routers/userRouter.js";
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app: Express = express();
-const PORT: number = 8000;
+const PORT: number | string = process.env.PORT || 3000;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename)
 
+app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
 app.use(express.json());
 app.use(cors());
 app.use("/api/users", userRouter);
+app.get('/', (_req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '..','client', 'dist', 'index.html'))
+})
 
 app.listen(PORT, async () => {
   await connectToDb().then(() => {

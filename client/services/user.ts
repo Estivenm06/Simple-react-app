@@ -1,14 +1,13 @@
 import axios, { AxiosError } from "axios";
 import { NewUser, User } from "../types/userType.js";
-axios.defaults.baseURL = 'http://localhost:8000/api';
 
 export const getAll = async (): Promise<User[]> => {
-  const response = await axios.get<User[]>("/users");
+  const response = await axios.get<User[]>("/api/users");
   return response.data;
 };
 
 export const getUser = async (id: string): Promise<User> => {
-  const response = await axios.get<User>("/users/" + id);
+  const response = await axios.get<User>("/api/users/" + id);
   return response.data;
 };
 
@@ -16,7 +15,7 @@ export const createUser = async (
   user: NewUser
 ): Promise<User | string | void> => {
   try {
-    const response = await axios.post<User>("/users/", user);
+    const response = await axios.post<User>("/api/users/", user);
     return response.data;
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
@@ -27,6 +26,6 @@ export const createUser = async (
 };
 
 export const deleteUser = async (id: number): Promise<User> => {
-  const response = await axios.delete("/users/" + id);
+  const response = await axios.delete("/api/users/" + id);
   return response.data;
 };

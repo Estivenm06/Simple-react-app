@@ -4,6 +4,11 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   base: "/",
+  build: {
+    outDir: './client/dist',
+    cssMinify: 'lightningcss',
+    minify: 'terser',
+  },
   server: {
     port: 3000,
     open: true,
