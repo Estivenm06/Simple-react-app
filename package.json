@@ -7,7 +7,8 @@
     "build": "vite build",
     "server": "nodemon --exec node --loader ts-node/esm ./server/index.ts",
     "dev": "concurrently --kill-others \"npm run server\" \"vite\"",
-    "preview": "concurrently --kill-others \"npm run server\" \"vite preview\"",
+    "start:client": "vite preview",
+    "start:server": "node --exec node --loader ts-node/esm ./server/index.ts",
     "lint": "eslint ."
   },
   "keywords": [],
