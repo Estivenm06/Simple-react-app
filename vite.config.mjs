@@ -21,7 +21,6 @@ export default defineConfig({
     proxy: {
       "/api": "http://localhost:8000",
     },
-    allowedHosts: "react-ts-app-158986608647.us-central1.run.app",
   },
   plugins: [react(), tailwindcss()],
 });
