@@ -43,12 +43,12 @@ export const Header = ({
     >
       {" "}
       <div className="flex flex-row transition-all ease-in-out duration-300 container mx-auto px-5">
-        <h1 className="text-center m-auto md:w-full flex flex-start font-bold sm:text-2xl md:text-3xl xl:text-4xl capitalize transition-all ease-in-out duration-300">
+        <a href="/" className="text-center m-auto md:w-full flex flex-start font-bold sm:text-2xl md:text-3xl xl:text-4xl capitalize transition-all ease-in-out duration-300">
           user information
-        </h1>
+        </a>
         <div className="flex flex-row gap-2 w-full justify-end items-center ml-5">
           <button
-            className="text-xs md:text-1xl lg:text-lg font-semibold capitalize bg-gray-500 text-gray px-3 py-2 md:px-5 lg:px-3 lg:py-1 rounded-lg transition-all ease-in-out duration-300"
+            className="text-xs md:text-1xl lg:text-lg font-semibold capitalize bg-gray-500 text-gray px-3 py-2 md:px-5 lg:px-3 lg:py-1 rounded-lg transition-all ease-in-out duration-300 cursor-pointer"
             onClick={() => setModal(true)}
           >
             add user

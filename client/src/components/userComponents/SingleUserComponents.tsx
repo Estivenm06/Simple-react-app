@@ -12,7 +12,8 @@ const UserComponents = ({ user }: UserComponentsProps): React.JSX.Element => {
     <div className="rounded-xl shadow-xl bg-gray-100 p-10 w-96 mx-auto">
       <button
         onClick={() => navigate("/")}
-        className="bg-blue-500 text-white font-bold px-4 py-2 mb-12 rounded-md hover:bg-blue-600 uppercase"
+        className="bg-blue-500 text-white font-bold px-4 py-2 mb-12 rounded-md hover:bg-blue-600 uppercase cursor-pointer
+        "
       >
         Back to Home
       </button>

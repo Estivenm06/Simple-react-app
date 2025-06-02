@@ -61,11 +61,11 @@ export const UserComponent = ({
       <div className="flex justify-between capitalize text-white transition-all ease-in-out duration-300">
       <button
         onClick={() => setValue(!value)}
-        className="hover:bg-teal-900 text-1xl px-3 py-1 bg-teal-600 rounded-lg transition-all ease-in-out duration-300 capitalize"
+        className="hover:bg-teal-900 text-1xl px-3 py-1 bg-teal-600 rounded-lg transition-all ease-in-out duration-300 capitalize cursor-pointer"
       >
         {value ? "close info..." : "more info..."}
       </button>
-      <button onClick={() => {handleDelete(user.id)}} className="hover:bg-red-900 text-1xl px-3 py-1 bg-red-600 rounded-lg transition-all ease-in-out duration-300 capitalize">
+      <button onClick={() => {handleDelete(user.id)}} className="hover:bg-red-900 text-1xl px-3 py-1 bg-red-600 rounded-lg transition-all ease-in-out duration-300 cursor-pointer capitalize">
           delete user
       </button>
       </div>

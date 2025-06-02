@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react"
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   base: "/",
@@ -7,20 +8,20 @@ export default defineConfig({
     port: 3000,
     open: true,
     proxy: {
-      '/api': {
-        target: 'http://localhost:8000',
+      "/api": {
+        target: "http://localhost:8000",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      }
-    }
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
   },
   preview: {
     port: 3000,
     open: true,
     proxy: {
-      '/api': 'http://localhost:8000',
+      "/api": "http://localhost:8000",
     },
-    allowedHosts: 'react-ts-app-158986608647.us-central1.run.app'
+    allowedHosts: "react-ts-app-158986608647.us-central1.run.app",
   },
-  plugins: [react()]
+  plugins: [react(), tailwindcss()],
 });

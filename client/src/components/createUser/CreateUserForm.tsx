@@ -11,8 +11,10 @@ interface CreateUserProps {
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
 }
 
-
-export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps): React.JSX.Element => {
+export const CreateUserForm = ({
+  setModal,
+  setUsers,
+}: CreateUserProps): React.JSX.Element => {
   const [page, setPage] = useState<number>(1);
   const [error, setError] = useState<string | null>(null);
 
@@ -52,12 +54,12 @@ export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps): React.J
     }
   };
 
-  const handleError = ({message}: {message: string }): void => {
-    setError(message)
+  const handleError = ({ message }: { message: string }): void => {
+    setError(message);
     setTimeout(() => {
-      setError(null)
-    }, 5000)
-  }
+      setError(null);
+    }, 5000);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -78,22 +80,48 @@ export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps): React.J
     },
     validationSchema: Yup.object().shape({
       //Page1
-      name: Yup.string().required(() => handleError({message: "Name is required"})),
-      username: Yup.string().required(() => handleError({message: "Username is required"})),
-      email: Yup.string().email(() => handleError({message: "Invalid email"})).required(() => handleError({message: "Email is required"})),
-      phone: Yup.string().required(() => handleError({message: "Phone is required"})),
+      name: Yup.string().required(() =>
+        handleError({ message: "Name is required" })
+      ),
+      username: Yup.string().required(() =>
+        handleError({ message: "Username is required" })
+      ),
+      email: Yup.string()
+        .email(() => handleError({ message: "Invalid email" }))
+        .required(() => handleError({ message: "Email is required" })),
+      phone: Yup.string().required(() =>
+        handleError({ message: "Phone is required" })
+      ),
       //Page2
-      city: Yup.string().required(() => handleError({message: "City is required"})),
-      suite: Yup.string().required(() => handleError({message: "Suite is required"})),
-      street: Yup.string().required(() => handleError({message: "Street is required"})),
-      zipcode: Yup.string().required(() => handleError({message: "Zip Code is required"})),
+      city: Yup.string().required(() =>
+        handleError({ message: "City is required" })
+      ),
+      suite: Yup.string().required(() =>
+        handleError({ message: "Suite is required" })
+      ),
+      street: Yup.string().required(() =>
+        handleError({ message: "Street is required" })
+      ),
+      zipcode: Yup.string().required(() =>
+        handleError({ message: "Zip Code is required" })
+      ),
       //Page3
-      website: Yup.string().required(() => handleError({message: "Website is required"})),
-      companyName: Yup.string().required(() => handleError({message: "Company Name is required"})),
-      catchPhrase: Yup.string().required(() => handleError({message: "Catch Phrase is required"})),
-      bs: Yup.string().required(() => handleError({message: "Bs is required"})),
+      website: Yup.string().required(() =>
+        handleError({ message: "Website is required" })
+      ),
+      companyName: Yup.string().required(() =>
+        handleError({ message: "Company Name is required" })
+      ),
+      catchPhrase: Yup.string().required(() =>
+        handleError({ message: "Catch Phrase is required" })
+      ),
+      bs: Yup.string().required(() =>
+        handleError({ message: "Bs is required" })
+      ),
       //Permission
-      lat: Yup.string().required(() => handleError({message: "Your location is required"})),
+      lat: Yup.string().required(() =>
+        handleError({ message: "Your location is required" })
+      ),
       lng: Yup.string().required("Lng is required"),
     }),
     onSubmit: async (values) => {
@@ -122,21 +150,25 @@ export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps): React.J
             },
           };
           await createUser(user)
-          .then((response) => {
-            if(typeof(response) === 'string'){
-              setError(response)
+            .then((response) => {
+              if (typeof response === "string") {
+                setError(response);
+                setTimeout(() => {
+                  setError(null);
+                }, 5000);
+              }
+              if (typeof response === "object") {
+                window.alert("User created succesfully.");
+                setUsers((prevValues: User[]) => prevValues.concat(response));
+                setModal(false);
+              }
+            })
+            .catch((error) => {
+              setError(error);
               setTimeout(() => {
-                setError(null)
-              }, 5000)
-            }
-            if(typeof(response) === 'object'){
-              window.alert('User created succesfully.')
-              setUsers((prevValues: User[]) => prevValues.concat(response))
-              setModal(false)
-            }
-          }
-          )
-          .catch((error) => {setError(error); setTimeout(() => {setError(null);}, 5000);});
+                setError(null);
+              }, 5000);
+            });
         } else {
           setError("Check all fields or allow location permission.");
         }
