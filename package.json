@@ -6,8 +6,8 @@
   "scripts": {
     "build": "vite build",
     "server": "nodemon --exec node --loader ts-node/esm ./server/index.ts",
-    "dev": "concurrently --kill-others \"npm run server\" \"vite --host\"",
-    "preview": "concurrently --kill-others \"npm run server\" \"vite preview --host\"",
+    "dev": "concurrently --kill-others \"npm run server\" \"vite\"",
+    "preview": "concurrently --kill-others \"npm run server\" \"vite preview\"",
     "lint": "eslint ."
   },
   "keywords": [],
@@ -25,6 +25,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "concurrently": "^9.1.2",
+    "dotenv": "^16.5.0",
     "eslint": "^9.22.0",
     "eslint-plugin-react": "^7.37.4",
     "formik": "^2.4.6",

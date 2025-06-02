@@ -52,9 +52,8 @@ export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps): React.J
     }
   };
 
-  const handleError = ({message, page}: {message: string, page: number }): void => {
+  const handleError = ({message}: {message: string }): void => {
     setError(message)
-    setPage(page)
     setTimeout(() => {
       setError(null)
     }, 5000)
@@ -79,22 +78,22 @@ export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps): React.J
     },
     validationSchema: Yup.object().shape({
       //Page1
-      name: Yup.string().required(() => handleError({message: "Name is required", page: 1})),
-      username: Yup.string().required(() => handleError({message: "Username is required", page: 1})),
-      email: Yup.string().email(() => handleError({message: "Invalid email", page: 1})).required(() => handleError({message: "Email is required", page: 1})),
-      phone: Yup.string().required(() => handleError({message: "Phone is required", page: 1})),
+      name: Yup.string().required(() => handleError({message: "Name is required"})),
+      username: Yup.string().required(() => handleError({message: "Username is required"})),
+      email: Yup.string().email(() => handleError({message: "Invalid email"})).required(() => handleError({message: "Email is required"})),
+      phone: Yup.string().required(() => handleError({message: "Phone is required"})),
       //Page2
-      city: Yup.string().required(() => handleError({message: "City is required", page: 2})),
-      suite: Yup.string().required(() => handleError({message: "Suite is required", page: 2})),
-      street: Yup.string().required(() => handleError({message: "Street is required", page: 2})),
-      zipcode: Yup.string().required(() => handleError({message: "Zip Code is required", page: 2})),
+      city: Yup.string().required(() => handleError({message: "City is required"})),
+      suite: Yup.string().required(() => handleError({message: "Suite is required"})),
+      street: Yup.string().required(() => handleError({message: "Street is required"})),
+      zipcode: Yup.string().required(() => handleError({message: "Zip Code is required"})),
       //Page3
-      website: Yup.string().required(() => handleError({message: "Website is required", page: 3})),
-      companyName: Yup.string().required(() => handleError({message: "Company Name is required", page: 3})),
-      catchPhrase: Yup.string().required(() => handleError({message: "Catch Phrase is required", page: 3})),
-      bs: Yup.string().required(() => handleError({message: "Bs is required", page: 3})),
+      website: Yup.string().required(() => handleError({message: "Website is required"})),
+      companyName: Yup.string().required(() => handleError({message: "Company Name is required"})),
+      catchPhrase: Yup.string().required(() => handleError({message: "Catch Phrase is required"})),
+      bs: Yup.string().required(() => handleError({message: "Bs is required"})),
       //Permission
-      lat: Yup.string().required(() => handleError({message: "Your location is required", page: 1})),
+      lat: Yup.string().required(() => handleError({message: "Your location is required"})),
       lng: Yup.string().required("Lng is required"),
     }),
     onSubmit: async (values) => {
@@ -154,7 +153,7 @@ export const CreateUserForm = ({ setModal, setUsers }: CreateUserProps): React.J
 
   return (
     <form
-      className={`container mx-auto shadow-xl rounded-lg w-80 lg:w-2/6 md:w-1/2 p-5 rounded-lg transition-all ease-in-out duration-500 bg-gray-100`}
+      className={`container mx-auto shadow-xl rounded-lg w-80 lg:w-2/6 md:w-1/2 p-5 transition-all ease-in-out duration-500 bg-gray-100`}
       onSubmit={formik.handleSubmit}
     >
       <div className="flex justify-between p-5 transition-all ease-in-out duration-500">

@@ -34,7 +34,7 @@ export const UserComponent = ({
           : "bg-gray-100 text-black"
       }`}
     >
-      <button onClick={() => navigate(`/user/${user.id}`)} className="hover:text-gray-200 text-3xl font-bold transition-all ease-in-out duration-300">{user.username}</button>
+      <button onClick={() => navigate(`/users/${user.id}`)} className="hover:text-gray-200 text-3xl font-bold transition-all ease-in-out duration-300">{user.username}</button>
       <p className="text-lg font-semibold text-gray-800 ml-0.5">
         Name: {user.name}
       </p>

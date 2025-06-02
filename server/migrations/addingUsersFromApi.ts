@@ -2,11 +2,7 @@ import User from "../models/user.js";
 import axios from "axios";
 import { DataTypes, QueryInterface } from "sequelize";
 
-const up = async ({
-  context: queryInterface,
-}: {
-  context: QueryInterface;
-}): Promise<void> => {
+const up = async ({context: queryInterface,}: { context: QueryInterface; }): Promise<void> => {
   await queryInterface.createTable("users", {
     id: {
       type: DataTypes.INTEGER,
@@ -71,4 +67,4 @@ const down = async ({
   }
 };
 
-module.exports = { up, down };
+export { up, down };
